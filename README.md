@@ -8,7 +8,7 @@
 
 ### list of contributors
 
-- **sm** - misha s.
+- **sma** - misha s.
 - **?** - egor u. (please choose any tag u want, i will be glad if it will be readable :D )
 
 ### contents
