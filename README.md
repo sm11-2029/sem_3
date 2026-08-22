@@ -1,10 +1,10 @@
-### cotributing rules
+### contributing rules
 
--each contributor shuld work in his own branch that names according to contributors tags (see list of contributors)
+- each contributor should work in their own branch, which is named according to their contributor tag (see list of contributors)
 
--after work it will be good if all of the contents will be merged to master
+- after work it will be good if all of the contents will be merged to master
 
--if you make a file that corresponds to your persanal work, please add a prefix with your tag. (e.g. sm_homework.shit) if it is a general file, do not add any prefix. (e.g. study_plan.png)
+- if you make a file that corresponds to your personal work, please add a prefix with your tag. (e.g. sm_homework.shit) if it is a general file, do not add any prefix. (e.g. study_plan.png)
 
 ### list of contributors
 
@@ -16,12 +16,22 @@
 ```
 .
 ├── en - english
+│   ├── hw1 - homework
+│   ├── hw2
+│   ├── hw3
+│   ├── kr1 - контрольная работа
+│   ├── kr2
+│   ├── kr3
+│   ├── rk1 - рубежный контроль
+│   ├── rk2
+│   ├── rk3
+│   └── exam - fuck.
 ├── fed - fundamentals of electronic devices
 ├── fs2 - fundamental science
 │   ├── dm - discrete mathematics
 │   └── misp - multiple integrals, series and probability theory
 ├── ls - legal science
-├── som- strength of materialsm
+├── som - strength of materialsm
 ├── tm - theoretical mechanics
 ├── misc - miscellaneous
 └── README.md 
