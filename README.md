@@ -34,5 +34,6 @@
 ├── som - strength of materialsm
 ├── tm - theoretical mechanics
 ├── misc - miscellaneous
+├── ph - physics
 └── README.md 
 ```
