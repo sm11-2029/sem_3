@@ -90,7 +90,7 @@ def make_plots(rows):
     ]
 
     for values, ylabel, filename, scale in specs:
-        fig, ax = plt.subplots(figsize=(5.6, 3.2))
+        fig, ax = plt.subplots(figsize=(4.5, 2.8))
 
         if scale == "log":
             ax.semilogx(freqs, values, marker="o", markersize=3,
@@ -104,24 +104,43 @@ def make_plots(rows):
         ax.set_xlabel("$f$, Гц")
         ax.set_ylabel(ylabel)
         fig.tight_layout()
-        fig.savefig(filename, dpi=200)
+        fig.savefig(filename, bbox_inches="tight", dpi=200)
         plt.close(fig)
 
 
-def make_document(table, figures=None):
-    figures = figures or []
-
-    figures_tex = "\n".join(
-        "\\vspace{0.5cm}\n"
-        "\\begin{center}\n"
-        + caption + "\\\\[2mm]\n"
+def make_figure_cell(caption, filename):
+    return (
+        "\\begin{minipage}{0.5\\linewidth}\n"
+        "\\centering\n"
+        + caption + "\\\\[1mm]\n"
         "\\includegraphics[width=\\linewidth]{" + filename + "}\n"
-        "\\end{center}"
-        for caption, filename in figures
+        "\\end{minipage}"
     )
 
+
+def make_figures_block(figures):
+    # figures: [top_left, bottom_left, top_right, bottom_right]
+    tl, bl, tr, br = figures
+
+    row1 = make_figure_cell(*tl) + "\\hfill\n" + make_figure_cell(*tr)
+    row2 = make_figure_cell(*bl) + "\\hfill\n" + make_figure_cell(*br)
+
+    return (
+        "\\begin{center}\n"
+        + row1 + "\n\n\\vspace{0.4cm}\n\n"
+        + row2 + "\n"
+        "\\end{center}"
+    )
+
+
+def make_document(table, figures=None):
+    figures_tex = ""
+
+    if figures:
+        figures_tex = make_figures_block(figures)
+
     return rf"""\documentclass[10pt,a5paper]{{article}}
-\usepackage[margin=1.2cm]{{geometry}}
+\usepackage[margin=5mm]{{geometry}}
 \usepackage[utf8]{{inputenc}}
 \usepackage[T2A]{{fontenc}}
 \usepackage[russian]{{babel}}
@@ -134,6 +153,10 @@ def make_document(table, figures=None):
 \sisetup{{group-separator={{\,}}, group-minimum-digits=4}}
 
 \begin{{document}}
+
+\begin{{center}}
+\Large Фильтр низких частот
+\end{{center}}
 
 \small
 {table}
@@ -151,10 +174,10 @@ def main():
     table = make_table(rows)
 
     figures = [
-        (r"$K_u(f)$ в линейном масштабе осей",             "k_lin.png"),
-        (r"$\varphi(f)$ в линейном масштабе осей",         "phi_lin.png"),
-        (r"$K_u(f)$ в логарифмическом масштабе осей",      "k_log.png"),
-        (r"$\varphi(f)$ в логарифмическом масштабе осей",  "phi_log.png"),
+        (r"$K_u(f)$ в линейном масштабе",            "k_lin.png"),
+        (r"$\varphi(f)$ в линейном масштабе",        "phi_lin.png"),
+        (r"$K_u(f)$ в логарифмическом масштабе",     "k_log.png"),
+        (r"$\varphi(f)$ в логарифмическом масштабе", "phi_log.png"),
     ]
 
     tex = make_document(table, figures)
