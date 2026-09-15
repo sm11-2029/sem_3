@@ -41,6 +41,10 @@ def make_rows(data):
     for freq, umax, period, delay in data:
         k = umax / 4
         phase = delay / period * 360
+
+        if phase > 180:
+            phase = 360 - phase
+
         rows.append((freq, k, phase))
 
     return rows
@@ -185,9 +189,9 @@ def build_section(source_file, title, prefix):
 
 def main():
     sections = [
-        build_section("low_pass.txt",  "Фильтр низких частот",   "lp"),
-        build_section("high_pass.txt", "Фильтр высоких частот",  "hp"),
-        build_section("band_pass.txt", "Полосовой фильтр",       "bp"),
+        build_section("low_pass.txt",  "Фильтр низких частот",  "lp"),
+        build_section("high_pass.txt", "Фильтр высоких частот", "hp"),
+        build_section("band_pass.txt", "Полосовой фильтр",      "bp"),
     ]
 
     tex = make_document(sections)

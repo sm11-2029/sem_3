@@ -1,6 +1,6 @@
 all: clean_aux
 
-res.tex: res.py low_pass.txt
+res.tex: res.py low_pass.txt high_pass.txt band_pass.txt
 	python3 res.py
 
 res.pdf: res.tex
