@@ -1,5 +1,8 @@
 from pathlib import Path
 import sympy as sp
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
 
 
 def parse_value(text):
@@ -42,11 +45,14 @@ def make_rows(data):
 
     return rows
 
+
 def latex_number(value, digits=3):
     return rf"\num[round-mode=places,round-precision={digits}]{{{float(value)}}}"
 
+
 def latex_freq(value):
     return rf"\num[round-mode=places,round-precision=0]{{{float(value)}}}"
+
 
 def make_table(rows):
     lines = [
@@ -71,14 +77,48 @@ def make_table(rows):
     return "\n".join(lines)
 
 
-def make_document(table, plot_file=None):
-    plot = ""
+def make_plots(rows):
+    freqs = [float(r[0]) for r in rows]
+    ks = [float(r[1]) for r in rows]
+    phases = [float(r[2]) for r in rows]
 
-    if plot_file:
-        plot = (
-            "\\vspace{0.5cm}\n"
-            "\\includegraphics[width=\\linewidth]{" + plot_file + "}\n"
-        )
+    specs = [
+        (ks,     "$K_u$",             "k_lin.png",   "linear"),
+        (phases, r"$\varphi$, град.", "phi_lin.png", "linear"),
+        (ks,     "$K_u$",             "k_log.png",   "log"),
+        (phases, r"$\varphi$, град.", "phi_log.png", "log"),
+    ]
+
+    for values, ylabel, filename, scale in specs:
+        fig, ax = plt.subplots(figsize=(5.6, 3.2))
+
+        if scale == "log":
+            ax.semilogx(freqs, values, marker="o", markersize=3,
+                        linewidth=1, color="black")
+            ax.grid(True, which="both", alpha=0.3)
+        else:
+            ax.plot(freqs, values, marker="o", markersize=3,
+                    linewidth=1, color="black")
+            ax.grid(True, alpha=0.3)
+
+        ax.set_xlabel("$f$, Гц")
+        ax.set_ylabel(ylabel)
+        fig.tight_layout()
+        fig.savefig(filename, dpi=200)
+        plt.close(fig)
+
+
+def make_document(table, figures=None):
+    figures = figures or []
+
+    figures_tex = "\n".join(
+        "\\vspace{0.5cm}\n"
+        "\\begin{center}\n"
+        + caption + "\\\\[2mm]\n"
+        "\\includegraphics[width=\\linewidth]{" + filename + "}\n"
+        "\\end{center}"
+        for caption, filename in figures
+    )
 
     return rf"""\documentclass[10pt,a5paper]{{article}}
 \usepackage[margin=1.2cm]{{geometry}}
@@ -98,7 +138,7 @@ def make_document(table, plot_file=None):
 \small
 {table}
 
-{plot}
+{figures_tex}
 
 \end{{document}}
 """
@@ -107,9 +147,17 @@ def make_document(table, plot_file=None):
 def main():
     data = read_data("low_pass.txt")
     rows = make_rows(data)
+    make_plots(rows)
     table = make_table(rows)
-    tex = make_document(table)
 
+    figures = [
+        (r"$K_u(f)$ в линейном масштабе осей",             "k_lin.png"),
+        (r"$\varphi(f)$ в линейном масштабе осей",         "phi_lin.png"),
+        (r"$K_u(f)$ в логарифмическом масштабе осей",      "k_log.png"),
+        (r"$\varphi(f)$ в логарифмическом масштабе осей",  "phi_log.png"),
+    ]
+
+    tex = make_document(table, figures)
     Path("res.tex").write_text(tex, encoding="utf-8")
 
 
