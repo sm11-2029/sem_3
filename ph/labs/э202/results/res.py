@@ -77,16 +77,16 @@ def make_table(rows):
     return "\n".join(lines)
 
 
-def make_plots(rows):
+def make_plots(rows, prefix):
     freqs = [float(r[0]) for r in rows]
     ks = [float(r[1]) for r in rows]
     phases = [float(r[2]) for r in rows]
 
     specs = [
-        (ks,     "$K_u$",             "k_lin.png",   "linear"),
-        (phases, r"$\varphi$, град.", "phi_lin.png", "linear"),
-        (ks,     "$K_u$",             "k_log.png",   "log"),
-        (phases, r"$\varphi$, град.", "phi_log.png", "log"),
+        (ks,     "$K_u$",             f"{prefix}_k_lin.png",   "linear"),
+        (phases, r"$\varphi$, град.", f"{prefix}_phi_lin.png", "linear"),
+        (ks,     "$K_u$",             f"{prefix}_k_log.png",   "log"),
+        (phases, r"$\varphi$, град.", f"{prefix}_phi_log.png", "log"),
     ]
 
     for values, ylabel, filename, scale in specs:
@@ -106,6 +106,13 @@ def make_plots(rows):
         fig.tight_layout()
         fig.savefig(filename, bbox_inches="tight", dpi=200)
         plt.close(fig)
+
+    return [
+        (r"$K_u(f)$ в линейном масштабе",            f"{prefix}_k_lin.png"),
+        (r"$\varphi(f)$ в линейном масштабе",        f"{prefix}_phi_lin.png"),
+        (r"$K_u(f)$ в логарифмическом масштабе",     f"{prefix}_k_log.png"),
+        (r"$\varphi(f)$ в логарифмическом масштабе", f"{prefix}_phi_log.png"),
+    ]
 
 
 def make_figure_cell(caption, filename):
@@ -133,11 +140,19 @@ def make_figures_block(figures):
     )
 
 
-def make_document(table, figures=None):
-    figures_tex = ""
+def make_section(title, table, figures):
+    return (
+        "\\begin{center}\n"
+        "\\Large " + title + "\n"
+        "\\end{center}\n\n"
+        "\\small\n"
+        + table + "\n\n"
+        + make_figures_block(figures)
+    )
 
-    if figures:
-        figures_tex = make_figures_block(figures)
+
+def make_document(sections):
+    body = "\n\n\\newpage\n\n".join(sections)
 
     return rf"""\documentclass[10pt,a5paper]{{article}}
 \usepackage[margin=5mm]{{geometry}}
@@ -154,33 +169,28 @@ def make_document(table, figures=None):
 
 \begin{{document}}
 
-\begin{{center}}
-\Large Фильтр низких частот
-\end{{center}}
-
-\small
-{table}
-
-{figures_tex}
+{body}
 
 \end{{document}}
 """
 
 
-def main():
-    data = read_data("low_pass.txt")
+def build_section(source_file, title, prefix):
+    data = read_data(source_file)
     rows = make_rows(data)
-    make_plots(rows)
+    figures = make_plots(rows, prefix)
     table = make_table(rows)
+    return make_section(title, table, figures)
 
-    figures = [
-        (r"$K_u(f)$ в линейном масштабе",            "k_lin.png"),
-        (r"$\varphi(f)$ в линейном масштабе",        "phi_lin.png"),
-        (r"$K_u(f)$ в логарифмическом масштабе",     "k_log.png"),
-        (r"$\varphi(f)$ в логарифмическом масштабе", "phi_log.png"),
+
+def main():
+    sections = [
+        build_section("low_pass.txt",  "Фильтр низких частот",   "lp"),
+        build_section("high_pass.txt", "Фильтр высоких частот",  "hp"),
+        build_section("band_pass.txt", "Полосовой фильтр",       "bp"),
     ]
 
-    tex = make_document(table, figures)
+    tex = make_document(sections)
     Path("res.tex").write_text(tex, encoding="utf-8")
 
 

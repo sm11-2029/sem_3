@@ -48,12 +48,12 @@
 \begin{minipage}{0.5\linewidth}
 \centering
 $K_u(f)$ в линейном масштабе\\[1mm]
-\includegraphics[width=\linewidth]{k_lin.png}
+\includegraphics[width=\linewidth]{lp_k_lin.png}
 \end{minipage}\hfill
 \begin{minipage}{0.5\linewidth}
 \centering
 $K_u(f)$ в логарифмическом масштабе\\[1mm]
-\includegraphics[width=\linewidth]{k_log.png}
+\includegraphics[width=\linewidth]{lp_k_log.png}
 \end{minipage}
 
 \vspace{0.4cm}
@@ -61,12 +61,120 @@ $K_u(f)$ в логарифмическом масштабе\\[1mm]
 \begin{minipage}{0.5\linewidth}
 \centering
 $\varphi(f)$ в линейном масштабе\\[1mm]
-\includegraphics[width=\linewidth]{phi_lin.png}
+\includegraphics[width=\linewidth]{lp_phi_lin.png}
 \end{minipage}\hfill
 \begin{minipage}{0.5\linewidth}
 \centering
 $\varphi(f)$ в логарифмическом масштабе\\[1mm]
-\includegraphics[width=\linewidth]{phi_log.png}
+\includegraphics[width=\linewidth]{lp_phi_log.png}
+\end{minipage}
+\end{center}
+
+\newpage
+
+\begin{center}
+\Large Фильтр высоких частот
+\end{center}
+
+\small
+\begin{center}
+\begin{tabular}{rrr}
+\toprule
+частота $f$, Гц & \hspace{1mm} $K_u(f)$ & \hspace{1mm} $\varphi(f)$, град. \\
+\midrule
+\num[round-mode=places,round-precision=0]{50.0} & \num[round-mode=places,round-precision=3]{0.0} & \num[round-mode=places,round-precision=3]{0.0} \\
+\num[round-mode=places,round-precision=0]{100.0} & \num[round-mode=places,round-precision=3]{0.0} & \num[round-mode=places,round-precision=3]{0.0} \\
+\num[round-mode=places,round-precision=0]{200.0} & \num[round-mode=places,round-precision=3]{0.025} & \num[round-mode=places,round-precision=3]{288.0} \\
+\num[round-mode=places,round-precision=0]{500.0} & \num[round-mode=places,round-precision=3]{0.0375} & \num[round-mode=places,round-precision=3]{270.0} \\
+\num[round-mode=places,round-precision=0]{1000.0} & \num[round-mode=places,round-precision=3]{0.0625} & \num[round-mode=places,round-precision=3]{270.0} \\
+\num[round-mode=places,round-precision=0]{10000.0} & \num[round-mode=places,round-precision=3]{0.5} & \num[round-mode=places,round-precision=3]{288.0} \\
+\num[round-mode=places,round-precision=0]{50000.0} & \num[round-mode=places,round-precision=3]{0.9} & \num[round-mode=places,round-precision=3]{333.0} \\
+\num[round-mode=places,round-precision=0]{100000.0} & \num[round-mode=places,round-precision=3]{0.975} & \num[round-mode=places,round-precision=3]{342.0} \\
+\num[round-mode=places,round-precision=0]{200000.0} & \num[round-mode=places,round-precision=3]{0.9875} & \num[round-mode=places,round-precision=3]{327.59999999999997} \\
+\num[round-mode=places,round-precision=0]{300000.0} & \num[round-mode=places,round-precision=3]{0.975} & \num[round-mode=places,round-precision=3]{360.0} \\
+\num[round-mode=places,round-precision=0]{400000.0} & \num[round-mode=places,round-precision=3]{0.975} & \num[round-mode=places,round-precision=3]{0.0} \\
+\num[round-mode=places,round-precision=0]{990000.0} & \num[round-mode=places,round-precision=3]{0.975} & \num[round-mode=places,round-precision=3]{0.0} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{minipage}{0.5\linewidth}
+\centering
+$K_u(f)$ в линейном масштабе\\[1mm]
+\includegraphics[width=\linewidth]{hp_k_lin.png}
+\end{minipage}\hfill
+\begin{minipage}{0.5\linewidth}
+\centering
+$K_u(f)$ в логарифмическом масштабе\\[1mm]
+\includegraphics[width=\linewidth]{hp_k_log.png}
+\end{minipage}
+
+\vspace{0.4cm}
+
+\begin{minipage}{0.5\linewidth}
+\centering
+$\varphi(f)$ в линейном масштабе\\[1mm]
+\includegraphics[width=\linewidth]{hp_phi_lin.png}
+\end{minipage}\hfill
+\begin{minipage}{0.5\linewidth}
+\centering
+$\varphi(f)$ в логарифмическом масштабе\\[1mm]
+\includegraphics[width=\linewidth]{hp_phi_log.png}
+\end{minipage}
+\end{center}
+
+\newpage
+
+\begin{center}
+\Large Полосовой фильтр
+\end{center}
+
+\small
+\begin{center}
+\begin{tabular}{rrr}
+\toprule
+частота $f$, Гц & \hspace{1mm} $K_u(f)$ & \hspace{1mm} $\varphi(f)$, град. \\
+\midrule
+\num[round-mode=places,round-precision=0]{50.0} & \num[round-mode=places,round-precision=3]{0.0} & \num[round-mode=places,round-precision=3]{0.0} \\
+\num[round-mode=places,round-precision=0]{100.0} & \num[round-mode=places,round-precision=3]{0.02} & \num[round-mode=places,round-precision=3]{0.0} \\
+\num[round-mode=places,round-precision=0]{200.0} & \num[round-mode=places,round-precision=3]{0.0225} & \num[round-mode=places,round-precision=3]{288.0} \\
+\num[round-mode=places,round-precision=0]{500.0} & \num[round-mode=places,round-precision=3]{0.035} & \num[round-mode=places,round-precision=3]{270.0} \\
+\num[round-mode=places,round-precision=0]{1000.0} & \num[round-mode=places,round-precision=3]{0.0625} & \num[round-mode=places,round-precision=3]{280.8} \\
+\num[round-mode=places,round-precision=0]{5000.0} & \num[round-mode=places,round-precision=3]{0.075} & \num[round-mode=places,round-precision=3]{315.0} \\
+\num[round-mode=places,round-precision=0]{10000.0} & \num[round-mode=places,round-precision=3]{0.3} & \num[round-mode=places,round-precision=3]{338.4} \\
+\num[round-mode=places,round-precision=0]{30000.0} & \num[round-mode=places,round-precision=3]{0.3} & \num[round-mode=places,round-precision=3]{20.540540540540544} \\
+\num[round-mode=places,round-precision=0]{50000.0} & \num[round-mode=places,round-precision=3]{0.2375} & \num[round-mode=places,round-precision=3]{39.60000000000001} \\
+\num[round-mode=places,round-precision=0]{80000.0} & \num[round-mode=places,round-precision=3]{0.1875} & \num[round-mode=places,round-precision=3]{54.72} \\
+\num[round-mode=places,round-precision=0]{100000.0} & \num[round-mode=places,round-precision=3]{0.15} & \num[round-mode=places,round-precision=3]{57.6} \\
+\num[round-mode=places,round-precision=0]{500000.0} & \num[round-mode=places,round-precision=3]{0.0375} & \num[round-mode=places,round-precision=3]{81.0} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{minipage}{0.5\linewidth}
+\centering
+$K_u(f)$ в линейном масштабе\\[1mm]
+\includegraphics[width=\linewidth]{bp_k_lin.png}
+\end{minipage}\hfill
+\begin{minipage}{0.5\linewidth}
+\centering
+$K_u(f)$ в логарифмическом масштабе\\[1mm]
+\includegraphics[width=\linewidth]{bp_k_log.png}
+\end{minipage}
+
+\vspace{0.4cm}
+
+\begin{minipage}{0.5\linewidth}
+\centering
+$\varphi(f)$ в линейном масштабе\\[1mm]
+\includegraphics[width=\linewidth]{bp_phi_lin.png}
+\end{minipage}\hfill
+\begin{minipage}{0.5\linewidth}
+\centering
+$\varphi(f)$ в логарифмическом масштабе\\[1mm]
+\includegraphics[width=\linewidth]{bp_phi_log.png}
 \end{minipage}
 \end{center}
 
