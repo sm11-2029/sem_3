@@ -42,34 +42,30 @@ def make_rows(data):
 
     return rows
 
+def latex_number(value, digits=3):
+    return rf"\num[round-mode=places,round-precision={digits}]{{{float(value)}}}"
 
-def latex_number(value):
-    value = float(value)
-
-    if abs(value - round(value)) < 1e-9:
-        expr = sp.Integer(int(round(value)))
-    else:
-        expr = sp.Float(str(round(value, 3)))
-
-    return sp.latex(expr)
-
+def latex_freq(value):
+    return rf"\num[round-mode=places,round-precision=0]{{{float(value)}}}"
 
 def make_table(rows):
     lines = [
+        r"\begin{center}",
         r"\begin{tabular}{rrr}",
         r"\toprule",
-        r"Frequency (Hz) & \(K\) & Phase (deg) \\",
+        r"частота $f$, Гц & \hspace{1mm} $K_u(f)$ & \hspace{1mm} $\varphi(f)$, град. \\",
         r"\midrule",
     ]
 
     for freq, k, phase in rows:
         lines.append(
-            f"{latex_number(freq)} & {latex_number(k)} & {latex_number(phase)} \\\\"
+            f"{latex_freq(freq)} & {latex_number(k)} & {latex_number(phase)} \\\\"
         )
 
     lines += [
         r"\bottomrule",
         r"\end{tabular}",
+        r"\end{center}",
     ]
 
     return "\n".join(lines)
@@ -93,6 +89,9 @@ def make_document(table, plot_file=None):
 \usepackage{{amsmath}}
 \usepackage{{graphicx}}
 \pagestyle{{empty}}
+
+\usepackage{{siunitx}}
+\sisetup{{group-separator={{\,}}, group-minimum-digits=4}}
 
 \begin{{document}}
 
